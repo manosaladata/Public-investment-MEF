@@ -7,7 +7,7 @@ El proyecto pretende generar reportes dinámicos sobre la ejecución del gasto e
 
 # b) ¿Por qué es importante?
 
-Su importancia recae en ser una variable económica que todo especialista tanto del sector público y privado siguen de cerca, dado que su buen desempeño genera confianza para los inversionistas. Sin embargo, al estar los datos al alcance de todos, no siempre contribuye a mejorar el desempeño. Creemos que a través de gráficos dinámicos, su visualización mejoraría y incentivaría a mejorar sus capacidades de ejecución, ya que se generaría una especie de competencia entre las regiones y municipalidades del Perú.
+Su importancia recae en ser una variable económica que todo especialista tanto del sector público y privado siguen de cerca, dado que su buen desempeño genera confianza para los inversionistas. Sin embargo, al estar los datos al alcance de todos, no siempre contribuye a mejorar el desempeño. Creemos que a través de gráficos dinámicos, su visualización mejoraría e incentivaría a mejorar sus capacidades de ejecución, ya que se generaría una especie de competencia entre las regiones y municipalidades del Perú.
 
 </div>
 
