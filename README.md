@@ -1,6 +1,8 @@
 # **Seguimiento de proyectos de inversión pública en los tres niveles de gobierno - Transparencia económica - MEF**
-<div style="text-align: justify"> 
+<div style="text-align: justify">
+
 # a) ¿De qué trata de el proyecto?
+
 El proyecto pretende generar reportes dinámicos sobre la ejecución del gasto en los proyectos de inversión pública en los tres niveles de gobierno, transparentando el avance de su ejecución.
 
 # b) ¿Por qué es importante?
