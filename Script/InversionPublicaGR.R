@@ -103,18 +103,18 @@ Pagina_actual<-Browser$getPageSource()
 #escrapeamos la información de todas las regiones
 Pagina<-read_html(Pagina_actual[[1]]) # en el elemento 1 de la lista está la url de la página actual
 
-InvPubReg<-Pagina%>%
+EG_Regional<-Pagina%>%
   html_node(css = "#ctl00_CPH1_UpdatePanel1")%>%
   html_node(css = ".Data")%>%
   html_table(header = F)
 #Cambiamos los nombres de las variables
-names(InvPubReg)[2:10]<-c("Pliego","PIA","PIM","Certificación","CompAnual",
+names(EG_Regional)[2:10]<-c("Pliego","PIA","PIM","Certificación","CompAnual",
                           "AtenDeComprMensual","Devengado","Girado","Avance%")
-InvPubReg<-InvPubReg[,-1]             #Nos quedamos con las variables que tienen información
-InvPubReg$FechaDeConsulta<-Sys.Date() # Añadimos la fecha de consulta
+EG_Regional<-EG_Regional[,-1]             #Nos quedamos con las variables que tienen información
+EG_Regional$FechaDeConsulta<-Sys.Date() # Añadimos la fecha de consulta
 
 #Guardamos la información
-saveRDS(InvPubReg,file = "InversionPublicaR.rds")
+saveRDS(EG_Regional,file = "EG_GR.rds")
 # Extraemos los proyectos de inversión pública de todas las regiones
 #Para acceder a cada departamento
 
@@ -205,8 +205,8 @@ for(i in c(1:26)) {
 
 #Juntar toda la base de dados
 
-list.files() # vemos todos los archivos de nuestra carpeta MINSA
-Ficheros <- list.files(pattern = "^PP_") # Extrae solo los que inician con PDFMinsa
+list.files() # vemos todos los archivos de nuestra carpeta 
+Ficheros <- list.files(pattern = "^PP_") # Extrae solo los que inician con determinado caracter
 ProductoProyecto<-read_rds(Ficheros[1])
 
 for (i in 2:26) {
@@ -217,4 +217,3 @@ saveRDS(ProductoProyecto,"ProductoProyectoGR.rds")
 #cerrar la sesión
 Browser$close()
 server$stop()
-
