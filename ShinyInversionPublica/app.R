@@ -77,13 +77,13 @@ ui <- dashboardPage(
 server <- shinyServer(function(input, output,session) {
     colscale <- c(semantic_palette[["red"]],semantic_palette[["green"]],semantic_palette[["blue"]])
    
-    datasub <- reactive({
-        DataGR[DataGR$G_Regional == input$region,]
-    }) 
+   # datasub <- reactive({
+    #    DataGR[DataGR$G_Regional == input$region,]
+    #}) 
     
 #Hacemos la grafica
     output$boxplot1 <- renderPlot({
-        ggplot(datasub,aes(x = Year,y = Devengado))+
+        ggplot(DataGR,aes(x = Year,y = Devengado))+
             geom_bar(stat = "identity",fill="gray")+
             geom_text(aes(label = round(Devengado, 1)),
                       position = position_dodge(0.5),
@@ -97,8 +97,8 @@ server <- shinyServer(function(input, output,session) {
                   axis.ticks.y = element_blank())
     })
     output$dotplot1 <- renderPlotly({
-        ggplotly(ggplot(datasub,aes(x = Year,y = Devengado))+
-                     geom_point(aes(size=Devengado))
+        ggplotly(ggplot(DataGR,aes(x = Year,y = Devengado))+
+                     geom_point(aes(color=G_Regional,size=Devengado))
                  )
     })
     output$DataRegion <- renderDataTable(DataGR)
