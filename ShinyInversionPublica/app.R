@@ -15,6 +15,9 @@ library(tidyverse)
 #iconos:https://fontawesome.com/icons?d=listing&p=8&m=free
 #Esta primera parte es limpieza de datos
 DataGR <- readRDS("Data/InversionTotalDepa.rds")
+# DataGR <- readRDS("ShinyInversionPublica/Data/InversionTotalDepa.rds")
+# DataGR <- readRDS("D:/ABCN/Github/Public-investment-MEF/ShinyInversionPublica/Data/InversionTotalDepa.rds")
+
 DataGR[,c(2:8)] <- sapply(DataGR[,c(2:8)], function(x) str_remove_all(x,pattern = ","))
 DataGR[,c(2:8)] <- sapply(DataGR[,c(2:8)], function(x) round(as.numeric(x)/1000000,3)) #Convertir en millones de soles
 DataGR <- DataGR%>%
@@ -77,13 +80,15 @@ ui <- dashboardPage(
 server <- shinyServer(function(input, output,session) {
     colscale <- c(semantic_palette[["red"]],semantic_palette[["green"]],semantic_palette[["blue"]])
    
-   # datasub <- reactive({
-    #    DataGR[DataGR$G_Regional == input$region,]
-    #}) 
+   datasub <- reactive({
+      # DataGR[DataGR$G_Regional == input$region,]
+       DataGR %>% filter(G_Regional == input$region)
+   })
     
 #Hacemos la grafica
     output$boxplot1 <- renderPlot({
-        ggplot(DataGR,aes(x = Year,y = Devengado))+
+        df1 <- datasub()
+        ggplot(DataGR[DataGR$G_Regional == input$region,],aes(x = Year,y = Devengado))+
             geom_bar(stat = "identity",fill="gray")+
             geom_text(aes(label = round(Devengado, 1)),
                       position = position_dodge(0.5),
@@ -97,17 +102,18 @@ server <- shinyServer(function(input, output,session) {
                   axis.ticks.y = element_blank())
     })
     output$dotplot1 <- renderPlotly({
-        ggplotly(ggplot(DataGR,aes(x = Year,y = Devengado))+
+        df1 <- datasub()
+        ggplotly(ggplot(df1,aes(x = Year,y = Devengado))+
                      geom_point(aes(color=G_Regional,size=Devengado))
                  )
     })
-    output$DataRegion <- renderDataTable(DataGR)
+    output$DataRegion <- renderDataTable(df1)
     # Downloadable csv of selected dataset ----
     output$downloadData <- downloadHandler(
         filename = function() {
             paste("DataR", ".xlsx")},
         content = function(file) {
-            write.xlsx(DataGR, file)})
+            write.xlsx(df1, file)})
     
 })
 
