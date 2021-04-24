@@ -49,7 +49,7 @@ ui <- dashboardPage(
                 fluidRow(
                     box(width = 4,color = "sky blue",ribbon = TRUE,
                         numericRangeInput("numeric_Range_input","seleccione rango de año:",
-                                          value = c(2010:2020), 
+                                          value = c(2010:2020),
                                           separator = "a")),
                     box(width = 3,color = "sky blue",ribbon = TRUE,
                     selectInput("region","Región:",
