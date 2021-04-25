@@ -17,7 +17,7 @@ ui <- dashboardPage(
                                           separator = "a")),
                     box(width = 3,color = "sky blue",ribbon = TRUE,
                     selectInput("region","Región:",
-                                choices = c(unique(DataGR$G_Regional)))),
+                                choices = c(unique(as.character(DataGR$G_Regional))))),
                     box(width = 3,color = "sky blue",ribbon = TRUE,
                         submitButton("Ejecutar"))),
                 fluidRow(
