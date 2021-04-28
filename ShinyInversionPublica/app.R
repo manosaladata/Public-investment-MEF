@@ -114,6 +114,13 @@ server <- shinyServer(function(input, output,session) {
         content = function(file) {
             write.xlsx(DataGR, file)})
     
+    react<-reactive(ggplot(proyectos, aes(x=fechas_proyectos, y=.data[[input$ngear]], group = 1)) +
+                        geom_line( color="grey") +
+                        geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
+                        theme_ipsum() +
+                        ggtitle("Evolución legislativa")
+    )
+    
 })
 
 
