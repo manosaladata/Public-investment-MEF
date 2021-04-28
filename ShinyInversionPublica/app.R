@@ -23,12 +23,16 @@ DataGR <- DataGR%>%
 DataGR[,2] <- sapply(DataGR[,2],function(x) str_to_title(x,locale = "sp")) #en
 DataGR[,2] <- sapply(DataGR[,2],function(x) str_replace_all(x,pattern = "Provincia Constitucional Del Callao",
                                                             replacement = "Callao"))
+#DataGR[,2] <- sapply(DataGR[,2],function(x) factor(x,
+#                                                   levels =unique(DataGR$G_Regional)))
+
 DataGR[,2] <- sapply(DataGR[,2],function(x) as.character(x))
 #DataGR[,11] <- sapply(DataGR[,11],function(x) as.numeric(x))
 
 #sapply(DataGR, class)
 #table(DataGR$G_Regional)
 #?icon()
+
 # Define UI for application 
 #skin = "blue", ó theme = "slate",
 
@@ -50,7 +54,8 @@ ui <- dashboardPage(
                                           separator = "a")),
                     box(width = 3,color = "sky blue",ribbon = TRUE,
                     selectInput("region","Región:",
-                                choices = c(unique(DataGR$G_Regional)))),
+                                choices = c(unique(DataGR$G_Regional)),
+                                selected = unique(DataGR[,"G_Regional"])[1])),
                     box(width = 3,color = "sky blue",ribbon = TRUE,
                         submitButton("Ejecutar"))),
                 fluidRow(
@@ -83,7 +88,7 @@ server <- shinyServer(function(input, output,session) {
     
 #Hacemos la grafica
     output$boxplot1 <- renderPlot({
-        ggplot(DataGR,aes(x = Year,y = Devengado))+
+        ggplot(DataGR[DataGR$G_Regional == input$region,],aes(x = Year,y = Devengado))+
             geom_bar(stat = "identity",fill="gray")+
             geom_text(aes(label = round(Devengado, 1)),
                       position = position_dodge(0.5),
@@ -97,7 +102,7 @@ server <- shinyServer(function(input, output,session) {
                   axis.ticks.y = element_blank())
     })
     output$dotplot1 <- renderPlotly({
-        ggplotly(ggplot(DataGR,aes(x = Year,y = Devengado))+
+        ggplotly(ggplot(DataGR[DataGR$G_Regional == input$region,],aes(x = Year,y = Devengado))+
                      geom_point(aes(color=G_Regional,size=Devengado))
                  )
     })
