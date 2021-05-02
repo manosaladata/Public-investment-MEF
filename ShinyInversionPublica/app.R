@@ -89,7 +89,7 @@ server <- shinyServer(function(input, output,session) {
 #Hacemos la grafica
     output$boxplot1 <- renderPlot({
         ggplot(DataGR[DataGR$G_Regional == input$region,],aes(x = Year,y = Devengado))+
-            geom_bar(stat = "identity",fill="gray")+
+            geom_bar(stat = "identity",fill="Blue")+
             geom_text(aes(label = round(Devengado, 1)),
                       position = position_dodge(0.5),
                       vjust =-0.3 ,show.legend = FALSE)+
