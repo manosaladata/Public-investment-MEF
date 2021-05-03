@@ -34,7 +34,7 @@ DataGR[,2] <- sapply(DataGR[,2],function(x) as.character(x))
 #?icon()
 
 # Define UI for application 
-#skin = "blue", ó theme = "slate",
+#skin = "blue", Ã³ theme = "slate",
 
 ui <- dashboardPage(
     dashboardHeader(title = "Inversión pública",color = "blue",inverted = TRUE),
@@ -89,7 +89,7 @@ server <- shinyServer(function(input, output,session) {
 #Hacemos la grafica
     output$boxplot1 <- renderPlot({
         ggplot(DataGR[DataGR$G_Regional == input$region,],aes(x = Year,y = Devengado))+
-            geom_bar(stat = "identity",fill="Blue")+
+            geom_bar(stat = "identity",fill="sky blue")+
             geom_text(aes(label = round(Devengado, 1)),
                       position = position_dodge(0.5),
                       vjust =-0.3 ,show.legend = FALSE)+
@@ -113,14 +113,6 @@ server <- shinyServer(function(input, output,session) {
             paste("DataR", ".xlsx")},
         content = function(file) {
             write.xlsx(DataGR, file)})
-    
-    react<-reactive(ggplot(proyectos, aes(x=fechas_proyectos, y=.data[[input$ngear]], group = 1)) +
-                        geom_line( color="grey") +
-                        geom_point(shape=21, color="black", fill="#69b3a2", size=6) +
-                        theme_ipsum() +
-                        ggtitle("Evolución legislativa")
-    )
-    
 })
 
 
