@@ -1,4 +1,4 @@
-#
+#Corer el shiny
 source("global.R")
 
 shinyServer(function(input, output,session) {
@@ -9,7 +9,7 @@ shinyServer(function(input, output,session) {
     #}) 
     
     #Grafica de barras
-    
+    #Mejorar la gráfica:https://stackoverflow.com/questions/30018187/changing-tick-intervals-when-x-axis-values-are-dates/30020683
     output$boxplot1 <- renderPlot({
         ggplot(DataGR[DataGR$G_Regional == input$region,],aes(x = Year,y = Devengado))+
             geom_bar(stat = "identity",fill="sky blue")+
@@ -29,7 +29,10 @@ shinyServer(function(input, output,session) {
     output$Lineplot1 <- renderPlotly({
         ggplotly(ggplot(DataGR[DataGR$G_Regional == input$region,],
                         aes(x = Year,y =`Avance%`))+
-                     geom_line()
+                     geom_line(color="blue")+
+                     geom_text(aes(label =`Avance%` ),
+                               position = position_dodge(0.5),
+                               vjust =-0.3 ,show.legend = FALSE)
         )
     })
 
@@ -39,6 +42,8 @@ shinyServer(function(input, output,session) {
     })
     
     #Mostrar la data
+    #Ajustar columna:https://stackoverflow.com/questions/25205410/r-shiny-set-datatable-column-width
+
     #Data region
     output$DataRegion <- renderDataTable(DataDepa())
     #Desacargar la data
