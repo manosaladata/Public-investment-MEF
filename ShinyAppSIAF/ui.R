@@ -1,15 +1,15 @@
 # Define UI for application 
-#skin = "blue", Ã³ theme = "slate",
-?icon
+#skin = "blue", theme = "slate",
+
 shinyUI(
     dashboardPage(
     dashboardHeader(title = "Inversión pública",color = "blue",inverted = TRUE),
-    #Barra lateral izquirda
+    #Barra lateral izquierda
     dashboardSidebar(side = "left", size = "thin", color = "teal",
                      sidebarMenu(
                          menuItem("Dashboard", tabName = "dashboard",icon = icon("dashboard")),
                          menuItem("Data", tabName = "data",icon = icon("table")))),
-    #Cuerdo del Shiny
+    #Cuerpo del Shiny
     dashboardBody(
         tabItems(
             #selected = 1,
@@ -23,7 +23,7 @@ shinyUI(
                     box(width = 3,color = "sky blue",ribbon = TRUE,
                         selectInput("region","Región:",
                                     choices = c(unique(DataGR$G_Regional)),
-                                    selected = unique(DataGR[,"G_Regional"])[1])),
+                                    multiple = TRUE)),
                     box(width = 3,color = "sky blue",ribbon = TRUE,
                         submitButton("Ejecutar"))),
                 fluidRow(

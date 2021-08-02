@@ -10,8 +10,13 @@ shinyServer(function(input, output,session) {
     
     #Grafica de barras
     #Mejorar la gráfica:https://stackoverflow.com/questions/30018187/changing-tick-intervals-when-x-axis-values-are-dates/30020683
+    #https://slcladal.github.io/motion.html
+    #https://shiny.rstudio.com/gallery/nz-trade-dash.html
+    
     output$boxplot1 <- renderPlot({
-        ggplot(DataGR[DataGR$G_Regional == input$region,],aes(x = Year,y = Devengado))+
+        ggplot(DataGR%>%
+                 filter(G_Regional%in%input$region),
+               aes(x = Year,y = Devengado))+
             geom_bar(stat = "identity",fill="sky blue")+
             geom_text(aes(label = round(Devengado, 1)),
                       position = position_dodge(0.5),
@@ -27,7 +32,9 @@ shinyServer(function(input, output,session) {
     
     #Grafico de linea
     output$Lineplot1 <- renderPlotly({
-        ggplotly(ggplot(DataGR[DataGR$G_Regional == input$region,],
+        validate(need(input$region, "Debe seleccionar al menos una región"))
+        ggplotly(ggplot(DataGR%>%
+                          filter(G_Regional%in%input$region),
                         aes(x = Year,y =`Avance%`))+
                      geom_line(color="blue")+
                      geom_text(aes(label =`Avance%` ),
@@ -38,14 +45,16 @@ shinyServer(function(input, output,session) {
 
     #Construimos la data reactiva
     DataDepa <- reactive({
-        filter(DataGR, G_Regional == input$region)
+        filter(DataGR, G_Regional%in%input$region)
     })
     
     #Mostrar la data
     #Ajustar columna:https://stackoverflow.com/questions/25205410/r-shiny-set-datatable-column-width
 
     #Data region
-    output$DataRegion <- renderDataTable(DataDepa())
+    output$DataRegion <- renderDataTable(DataDepa(),extensions = "Buttons", 
+                                         options = list(dom = "Brtip",buttons = "excel"),
+                                         server = FALSE)
     #Desacargar la data
     output$downloadData1 <- downloadHandler(
         filename = function() {
