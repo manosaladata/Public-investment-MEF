@@ -4,7 +4,7 @@
 #    http://shiny.rstudio.com/
 #
 library(shiny)
-library(shinyWidgets) #numericRangeInput()
+#library(shinyWidgets) #numericRangeInput()
 #library(shinydashboard)
 library(semantic.dashboard)
 library(plotly)
