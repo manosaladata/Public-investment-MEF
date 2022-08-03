@@ -1,7 +1,6 @@
-
-
+library(shiny)
+library(shinydashboard)
 #DataGR[,11] <- sapply(DataGR[,11],function(x) as.numeric(x))
-
 #sapply(DataGR, class)
 #table(DataGR$G_Regional)
 #?icon()
